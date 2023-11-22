@@ -8,39 +8,35 @@ using UnityEngine.SceneManagement;
 [System.Serializable]
 public class UIManager
 {
-    [Header("Health Bar")]
-    [SerializeField] private Slider healthBar;
-
-    [Header("Timer")]
-    [SerializeField] private TextMeshProUGUI timerText;
-
-    [Header("Hostage Killed Text")]
-    [SerializeField] private RectTransform hostageKilledText;
+    [SerializeField] Slider healthBar;
+    [SerializeField] TextMeshProUGUI timerText;
+    [SerializeField] RectTransform hostageKilledText;
 
     [Header("Weapon HUD")]
-    [SerializeField] private Image weaponIcon;
-    [SerializeField] private TextMeshProUGUI ammoText;
-    [SerializeField] private GameObject reloadWarning;
-    [SerializeField] private RectTransform crossHair;
+    [SerializeField] Image weaponIcon;
+    [SerializeField] TextMeshProUGUI ammoText;
+    [SerializeField] GameObject reloadWarning;
+    [SerializeField] RectTransform crossHair;
 
     [Header("Score Properties")]
-    [SerializeField] private TextMeshProUGUI enemyKilledText;
-    [SerializeField] private TextMeshProUGUI shotsFiredText;
-    [SerializeField] private TextMeshProUGUI shotsHitText;
-    [SerializeField] private TextMeshProUGUI accuracyText;
+    [SerializeField] TextMeshProUGUI enemyKilled;
+    [SerializeField] TextMeshProUGUI hostageKilled;
+    [SerializeField] TextMeshProUGUI shots;
+    [SerializeField] TextMeshProUGUI hit;
+    [SerializeField] TextMeshProUGUI accuracy;
+    [SerializeField] GameObject endScreenPanel;
+    [SerializeField] TextMeshProUGUI rankText;
+    [SerializeField] Button backButton;
+    [SerializeField] string titleSceneName;
 
-    [Header("End Screen")]
-    [SerializeField] private GameObject endScreenPanel;
-    [SerializeField] private TextMeshProUGUI rankText;
-    [SerializeField] private Button backButton;
-    [SerializeField] private string titleSceneName;
+
 
     private WeaponData currentWeapon;
-
     public void Init(float maxHealth)
     {
         if (crossHair != null)
             Cursor.visible = false;
+
 
         healthBar.maxValue = maxHealth;
         healthBar.value = maxHealth;
@@ -51,6 +47,11 @@ public class UIManager
         backButton.onClick.AddListener(GoToTitleScene);
     }
 
+    private void UpdateTimer(int currentTimer)
+    {
+        timerText.SetText(currentTimer.ToString("00"));
+    }
+
     public void RemoveEvent()
     {
         PlayerScript.OnWeaponChanged -= UpdateWeapon;
@@ -58,75 +59,68 @@ public class UIManager
         currentWeapon.OnWeaponFired -= UpdateAmmo;
     }
 
+    public void UpdateWeapon(WeaponData obj)
+    {
+        if (currentWeapon != null)
+            currentWeapon.OnWeaponFired -= UpdateAmmo;
+
+        currentWeapon = obj;
+        currentWeapon.OnWeaponFired += UpdateAmmo; //Change Bullet Count  
+        weaponIcon.sprite = currentWeapon.GetIcon; //Change Weapon Icon
+    }
+
     public void UpdateHealth(float value)
     {
         healthBar.value = value;
     }
 
-    public void UpdateTimer(int currentTimer)
+    void UpdateAmmo(int ammo)
     {
-        timerText.SetText(currentTimer.ToString("00"));
-    }
-
-    public void UpdateWeapon(WeaponData weaponData)
-    {
-        if (currentWeapon != null)
-            currentWeapon.OnWeaponFired -= UpdateAmmo;
-
-        currentWeapon = weaponData;
-        currentWeapon.OnWeaponFired += UpdateAmmo; // Update Bullet Count  
-        weaponIcon.sprite = currentWeapon.GetIcon; // Update Weapon Icon
-    }
-
-    public void UpdateAmmo(int ammo)
-    {
-        // Show reload warning when ammo is 0
+        //enable reload warning when ammo is 0
         reloadWarning.SetActive(ammo <= 0);
-        // Format bullet count
+        //format bullet count
         ammoText.SetText(ammo.ToString("00"));
     }
 
-    public void ShowHostageKilled(Vector3 position, bool show)
+    public void ShowHostageKilled(Vector3 pos, bool show)
     {
         hostageKilledText.gameObject.SetActive(show);
 
         if (!show)
             return;
 
-        hostageKilledText.position = position;
-        Vector2 adjustedPosition = Extensions.GetPositionInsideScreen(new Vector2(1920f, 1080f), hostageKilledText, 25f);
-        // Apply to anchored position
-        hostageKilledText.anchoredPosition = adjustedPosition;
+        hostageKilledText.position = pos;
+        Vector2 adjustPos = Extensions.GetPositionInsideScreen(new Vector2(1920f, 1080f), hostageKilledText, 25f);
+        //apply to anchored position
+        hostageKilledText.anchoredPosition = adjustPos;
     }
 
-    public void ShowEndScreen(int enemyKilled, int totalEnemy, int hostageKilled, int shotsFired, int shotsHit)
+    public void ShowEndScreen(int enemyKill, int totalEnemy, int hostageKill, int totalShots, int totalHit)
     {
-        // End screen stats calculation
+        //endscreen stats calculaion
         endScreenPanel.SetActive(true);
-        float enemyKilledPercentage = ((enemyKilled / (float)totalEnemy) * 100f);
-        enemyKilledText.SetText(enemyKilledPercentage.ToString("00") + "%");
-        hostageKilledText.SetText(hostageKilled.ToString());
-        shotsFiredText.SetText(shotsFired.ToString());
-        shotsHitText.SetText(shotsHit.ToString());
-        float accuracy = (shotsHit / (shotsFired == 0 ? 1f : (float)shotsFired)) * 100f;
-        accuracyText.SetText(accuracy.ToString("00") + "%");
+        enemyKilled.SetText(((enemyKill / (float)totalEnemy) * 100f).ToString("00") + "%");
+        hostageKilled.SetText(hostageKill.ToString());
+        shots.SetText(totalShots.ToString());
+        hit.SetText(totalHit.ToString());
+        accuracy.SetText(((totalHit / (totalShots == 0 ? 1f : (float)totalShots)) * 100f).ToString("00") + "%");
 
-        CalculateScore(enemyKilledPercentage, accuracy);
+        CalculateScore(enemyKill, totalEnemy, hostageKill, totalShots, totalHit);
     }
 
-    private void CalculateScore(float enemyKilledPercentage, float accuracy)
+    void CalculateScore(int enemyKill, int totalEnemy, int hostageKill, int totalShots, int totalHit)
     {
-        /* Rank System
-        * Hostage Killed Decreases the score by 15
-        A - Enemy Killed > 90% && Accuracy > 80% = Total Average 170/2 = 85
-        B - Enemy Killed > 75% < 90% && Accuracy > 70% < 80% = Total Average > 72% < 85%
-        C - Enemy Killed > 60% < 75% && Accuracy > 55% < 70% = Total Average > 57% < 72%
-        D - Enemy Killed < 60% && Accuracy < 55% Total Average < 57%
-        */
+        /*Rank System
+       *Hostage Killed Decrease point by 15
+       A - Enemy Killed > 90% && Accuracy > 80% = Total Average 170/2 = 85
+       B - Enemy Killed > 75% < 90% && Accuracy > 70% < 80% = Total Average > 72% < 85%
+       C - Enemy Killed > 60% < 75% && Accuracy > 55% < 70% = Total Average > 57% < 72%
+       D - Enemy Killed < 60% && Accuracy < 55% Total Average < 57%
+       */
 
-        float hostagePenalty = hostageKilled * 15f;
-        float enemyKillRatio = enemyKilledPercentage - hostagePenalty;
-        float accuracyRatio = accuracy - hostagePenalty;
+        float hostagePenalty = hostageKill * 15f;
+        float enemyKillRatio = ((enemyKill / (float)totalEnemy) * 100f) - hostagePenalty;
+        float accuracyRatio = ((totalHit / (totalShots == 0 ? 1f : (float)totalShots)) * 100f) - hostagePenalty;
         float totalAverage = (enemyKillRatio + accuracyRatio) / 2f;
 
         if (totalAverage >= 85f)
@@ -149,17 +143,16 @@ public class UIManager
         {
             rankText.SetText("D");
         }
-    }
 
+    }
     public void MoveCrosshair(Vector3 mousePosition)
     {
         if (crossHair != null)
             crossHair.position = mousePosition;
     }
 
-    private void GoToTitleScene()
+    void GoToTitleScene()
     {
         SceneManager.LoadScene(titleSceneName);
     }
 }
-
