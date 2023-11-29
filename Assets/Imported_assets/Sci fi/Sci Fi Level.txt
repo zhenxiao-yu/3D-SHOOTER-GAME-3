@@ -1,0 +1,25 @@
+Sci Fi level,Perfect for space shooter.
+You can build corridors and rooms add.
+With Prefab you can easily configure the desired length of the corridor and turns
+Level contains several compartments
+
+1.Door section
+2.Junction(L) section
+3.Junction(L_R) section
+4.Junction(R) section
+5.Junction section
+6.Props room
+7.Straight section
+8.Flask
+9.Box
+1.0Barrel
+
+All models have a PBR textures
+
+-Albedo
+-Ao
+-Emessive
+-Metallic
+-Normals
+
+All(1024-1024 Size)
