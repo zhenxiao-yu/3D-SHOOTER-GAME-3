@@ -27,4 +27,4 @@ MonoBehaviour:
   reloadWarningSfx:
     id: 0
   fxScale: 0.1
-  weaponIcon: {fileID: -1982046919, guid: b9d8c10a676257f4ab939978bba1f4e2, type: 3}
+  weaponIcon: {fileID: 21300000, guid: 921286907f7a6459282ba117321841fb, type: 3}
