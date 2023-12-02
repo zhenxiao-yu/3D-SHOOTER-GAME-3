@@ -41,7 +41,7 @@ public class TimerObject
     // Coroutine that runs the timer
     private IEnumerator TimerRuns(float duration)
     {
-        while (duration > 0f)
+        while (duration >= 0f)
         {
             // If the player is dead, exit the coroutine prematurely
             if (GameManager.Instance.PlayerDead)

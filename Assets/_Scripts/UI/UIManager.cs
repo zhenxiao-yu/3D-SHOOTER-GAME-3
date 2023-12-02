@@ -110,28 +110,20 @@ public class UIManager
 
     void CalculateScore(int enemyKill, int totalEnemy, int hostageKill, int totalShots, int totalHit)
     {
-        /*Rank System
-       *Hostage Killed Decrease point by 15
-       A - Enemy Killed > 90% && Accuracy > 80% = Total Average 170/2 = 85
-       B - Enemy Killed > 75% < 90% && Accuracy > 70% < 80% = Total Average > 72% < 85%
-       C - Enemy Killed > 60% < 75% && Accuracy > 55% < 70% = Total Average > 57% < 72%
-       D - Enemy Killed < 60% && Accuracy < 55% Total Average < 57%
-       */
-
         float hostagePenalty = hostageKill * 15f;
         float enemyKillRatio = ((enemyKill / (float)totalEnemy) * 100f) - hostagePenalty;
         float accuracyRatio = ((totalHit / (totalShots == 0 ? 1f : (float)totalShots)) * 100f) - hostagePenalty;
         float totalAverage = (enemyKillRatio + accuracyRatio) / 2f;
 
-        if (totalAverage >= 85f)
+        if (totalAverage >= 90f)
         {
             rankText.SetText("A");
         }
-        else if (totalAverage >= 72f && totalAverage < 85f)
+        else if (totalAverage >= 75f && totalAverage < 90f)
         {
             rankText.SetText("B");
         }
-        else if (totalAverage >= 57f && totalAverage < 72f)
+        else if (totalAverage >= 50f && totalAverage < 75f)
         {
             rankText.SetText("C");
         }
@@ -139,7 +131,7 @@ public class UIManager
         {
             rankText.SetText("F");
         }
-        else if (totalAverage < 57f)
+        else if (totalAverage < 50f)
         {
             rankText.SetText("D");
         }

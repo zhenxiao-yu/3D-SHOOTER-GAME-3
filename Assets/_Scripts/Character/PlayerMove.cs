@@ -20,10 +20,18 @@ public class PlayerMove : MonoBehaviour
     private float distanceTravelled;
     private int areaCleared;
 
+    private bool speedBoostActive = false; // To track if the speed boost is active
+    private float originalSpeed; // To store the original speed
+
     void Start()
     {
         InitializeShootOutPoints(); // Initialize shoot-out points
+                                    // Start the speed boost coroutine for 10 seconds
+        StartCoroutine(ActivateSpeedBoost(8f));
+
     }
+
+
 
     void Update()
     {
@@ -44,7 +52,9 @@ public class PlayerMove : MonoBehaviour
 
     private void MoveAlongPath()
     {
-        distanceTravelled += speed * Time.deltaTime;
+        // Check if the speed boost is active and update the speed accordingly
+        float currentSpeed = speedBoostActive ? speed * 10f : speed;
+        distanceTravelled += currentSpeed * Time.deltaTime;
         transform.position = path.path.GetPointAtDistance(distanceTravelled, endOfPath);
         transform.rotation = path.path.GetRotationAtDistance(distanceTravelled, endOfPath);
     }
@@ -65,6 +75,20 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
+    private IEnumerator ActivateSpeedBoost(float duration)
+    {
+        // Store the original speed and set the speed boost flag
+        originalSpeed = speed;
+        speedBoostActive = true;
+
+        // Wait for the specified duration
+        yield return new WaitForSeconds(duration);
+
+        // Restore the original speed and reset the speed boost flag
+        speed = originalSpeed;
+        speedBoostActive = false;
+    }
+
     private void OnValidate()
     {
         if (enableDebug)
@@ -79,8 +103,11 @@ public class PlayerMove : MonoBehaviour
         transform.rotation = path.path.GetRotationAtDistance(previewDistance, endOfPath);
     }
 
-    public void AreaCleared()
+    public void AreaCleared(bool prevCleared)
     {
+        if (prevCleared)
+            return;
+            
         areaCleared++;
 
         if (areaCleared == shootOutEntries.Length)

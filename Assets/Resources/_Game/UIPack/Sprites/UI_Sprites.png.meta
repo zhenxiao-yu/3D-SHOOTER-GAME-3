@@ -17,12 +17,6 @@ TextureImporter:
   - first:
       213: -2456897191603583936
     second: UI_Icon_Hand_Gun
-  - first:
-      213: -2624902610638247176
-    second: UI_CrossHair
-  - first:
-      213: -1528731771109299679
-    second: UI_Sprites_Transparent
   externalObjects: {}
   serializedVersion: 12
   mipmaps:
@@ -245,7 +239,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 296
-        y: 7
+        y: 6
         width: 153
         height: 79
       alignment: 0
@@ -261,48 +255,6 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: UI_CrossHair
-      rect:
-        serializedVersion: 2
-        x: 413
-        y: 406
-        width: 75
-        height: 75
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8777f73dccedefa45b43ecc8ea22e224
-      internalID: -2624902610638247176
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: UI_Sprites_Transparent
-      rect:
-        serializedVersion: 2
-        x: 436
-        y: 264
-        width: 25
-        height: 27
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 076f3b19b0e63ea489fab3d1b57e1e4e
-      internalID: -1528731771109299679
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -314,12 +266,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      UI_CrossHair: -2624902610638247176
       UI_Frame: 5236390971858850787
       UI_Icon_Hand_Gun: -2456897191603583936
       UI_Icon_Machine_Gun: -644297780690176812
       UI_Panel: 4380208185570964407
-      UI_Sprites_Transparent: -1528731771109299679
       UI_StrippedBar: -6732905544714063899
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
