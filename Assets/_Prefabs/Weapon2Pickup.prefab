@@ -28,7 +28,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -17, y: 1, z: 1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.32, y: 2.32, z: 2.32}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2272538617603424497}
@@ -70,7 +70,7 @@ MonoBehaviour:
   weapon: {fileID: 11400000, guid: c6f923715a08e0a46a45a86751a29146, type: 2}
   rotateSpeed: 90
   pickupSfx:
-    id: 0
+    id: 11
 --- !u!1 &7547143497344264543
 GameObject:
   m_ObjectHideFlags: 0

@@ -4968,7 +4968,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSfx:
-    id: 0
+    id: 6
   twoDSound: 0
   delay: 0
 --- !u!1 &1123476242953952

@@ -3,7 +3,10 @@ guid: 8ce15d4d4a90e3748b7a660d98fd1180
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - audioLib: {fileID: 11400000, guid: ea4ac7e681dc1644798eec893191bd5a, type: 2}
+  - sfxGroup: {fileID: -7955954190319549307, guid: 786e9ae517b71b04896f2ba803aef1e6, type: 2}
+  - bgmGroup: {fileID: -8969327979528875821, guid: 786e9ae517b71b04896f2ba803aef1e6, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

@@ -119,5 +119,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabsToSpawn: {fileID: 3211826855606461875, guid: 7dbd9e411600d484294712cf251d31b5, type: 3}
-  yOffset: 0.5
+  yOffset: 1
   destroyOnHit: 1

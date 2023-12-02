@@ -27,7 +27,7 @@ public class PlayerMove : MonoBehaviour
     {
         InitializeShootOutPoints(); // Initialize shoot-out points
                                     // Start the speed boost coroutine for 10 seconds
-        StartCoroutine(ActivateSpeedBoost(15f));
+        StartCoroutine(ActivateSpeedBoost(8f));
 
     }
 
@@ -103,8 +103,11 @@ public class PlayerMove : MonoBehaviour
         transform.rotation = path.path.GetRotationAtDistance(previewDistance, endOfPath);
     }
 
-    public void AreaCleared()
+    public void AreaCleared(bool prevCleared)
     {
+        if (prevCleared)
+            return;
+            
         areaCleared++;
 
         if (areaCleared == shootOutEntries.Length)

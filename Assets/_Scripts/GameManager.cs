@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,9 +11,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameState state;
     [SerializeField] private PlayerMove playerMove;
     [SerializeField] private PlayerScript playerScript;
-    [SerializeField] private int playerHealth = 10; // Default health value
+    [SerializeField] private int playerHealth = 20; // Default health value
     [SerializeField] private UIManager uiManager = null;
     [SerializeField] private VolumeSettings volSetting = null;
+
+    [Header("Force Field")]
+    public GameObject forceField;
+
+
+    public bool isFKeyHeld = false;
 
     // Game Stats
     private float currentHealth;
@@ -105,6 +112,12 @@ public class GameManager : MonoBehaviour
 
     public void PlayerHit(float damage)
     {
+        // Check if the "F" key is held down and return if true
+        if (isFKeyHeld)
+        {
+            return;
+        }
+
         // Take damage when the player is hit
         currentHealth -= damage;
         uiManager.UpdateHealth(currentHealth); // Change UI
@@ -171,6 +184,17 @@ public class GameManager : MonoBehaviour
     {
         HandlePauseInput();
         uiManager.MoveCrosshair(Input.mousePosition);
+
+        if (Input.GetKey(KeyCode.F))
+        {
+            isFKeyHeld = true;
+            forceField.SetActive(true);
+        }
+        else
+        {
+            isFKeyHeld = false;
+            forceField.SetActive(false);
+        }
     }
 
     private void HandlePauseInput()

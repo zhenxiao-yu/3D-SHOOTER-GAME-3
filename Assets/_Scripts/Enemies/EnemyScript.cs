@@ -152,6 +152,9 @@ public class EnemyScript : MonoBehaviour, InterfaceHitableObj
 
     public void StopShooting()
     {
+        // Add your code here
+        if (isDead)
+            return;
         StopAllCoroutines();
     }
 }

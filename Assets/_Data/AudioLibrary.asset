@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59e5a0712d9ac7f46b932671bf7c9a98, type: 3}
+  m_Name: AudioLibrary
+  m_EditorClassIdentifier: 
+  audioList:
+  - audioName: BGM
+    audioClips:
+    - {fileID: 8300000, guid: ce2bdc71de8221046b5109f02c551f46, type: 3}
+    minPitch: 1
+    maxPitch: 1
+  - audioName: Gun Shot
+    audioClips:
+    - {fileID: 8300000, guid: 9babdee5a79ffa14eb69951464145333, type: 3}
+    minPitch: 0.9
+    maxPitch: 1.1
+  - audioName: Electric Zap
+    audioClips:
+    - {fileID: 8300000, guid: 24a4d5915630ed24ba409b9908cfaa1b, type: 3}
+    minPitch: 0.9
+    maxPitch: 1.1
+  - audioName: Gun Reload
+    audioClips:
+    - {fileID: 8300000, guid: 6198b6e4895b0b646bbb1efbdbf7f719, type: 3}
+    minPitch: 0.9
+    maxPitch: 1.1
+  - audioName: Gun Empty
+    audioClips:
+    - {fileID: 8300000, guid: 93a8f644adbf375478e6ae0c39c8723b, type: 3}
+    minPitch: 0.9
+    maxPitch: 1.1
+  - audioName: Hit Impact
+    audioClips:
+    - {fileID: 8300000, guid: 408ee3beee94a6c42ae8a47a73aa48fd, type: 3}
+    minPitch: 0.9
+    maxPitch: 1.1
+  - audioName: Explosion
+    audioClips:
+    - {fileID: 8300000, guid: 74e3bd7fb4ca4874f9ec1af8347cb904, type: 3}
+    minPitch: 0.9
+    maxPitch: 1.1
+  - audioName: Player Damage
+    audioClips:
+    - {fileID: 8300000, guid: 5bcd7d36d8c2672418cd1607fdefb91b, type: 3}
+    minPitch: 0.9
+    maxPitch: 1.1
+  - audioName: Reload Warning
+    audioClips:
+    - {fileID: 8300000, guid: f43113f926de6dc43bb5e7c4c2261faf, type: 3}
+    minPitch: 0.9
+    maxPitch: 1.1
+  - audioName: Hosatge
+    audioClips:
+    - {fileID: 8300000, guid: 69cc874bca887074b80ef3156eeaf553, type: 3}
+    minPitch: 0.9
+    maxPitch: 1.1
+  - audioName: UI Button
+    audioClips:
+    - {fileID: 8300000, guid: 20cf20799a1367b4b963cf79633b3592, type: 3}
+    minPitch: 0.9
+    maxPitch: 1.1
+  - audioName: Weapon Pickup
+    audioClips:
+    - {fileID: 8300000, guid: 1bb7dd6cbe030444ea22efe042394463, type: 3}
+    minPitch: 0.9
+    maxPitch: 1.1
+  - audioName: Gun Shot 2
+    audioClips:
+    - {fileID: 8300000, guid: 08f78eba48bb21c44ac5a74ca84efc83, type: 3}
+    - {fileID: 8300000, guid: 3dc7b4438e9f788479f2eba0e75191b1, type: 3}
+    - {fileID: 8300000, guid: e196615aab553a14ab4e1aeb462c195c, type: 3}
+    - {fileID: 8300000, guid: 70c97e425596b8142b7b9163256c0868, type: 3}
+    minPitch: 0.9
+    maxPitch: 1.1
+  - audioName: Enemy
+    audioClips:
+    - {fileID: 8300000, guid: f0ccdb429e8ec6b44bc8492080f09c44, type: 3}
+    - {fileID: 8300000, guid: 916328bf460138646b65a4e5a839a64b, type: 3}
+    - {fileID: 8300000, guid: cb518e1262b9ed2448c9dc32c0fb0319, type: 3}
+    - {fileID: 8300000, guid: c0d4b6fd7d75577479ade4f457baf8dc, type: 3}
+    minPitch: 0.9
+    maxPitch: 1.1

@@ -1,53 +1,69 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Kino;
 
 public class PlayerScript : MonoBehaviour
 {
-    // Weapon Change Event
     public static System.Action<WeaponData> OnWeaponChanged = delegate { };
 
-    [SerializeField] WeaponData defaultWeapon;
-    [SerializeField] AnimationCurve glitchCurve;
-    [SerializeField] AudioGetter damageSfx;
+    [SerializeField] private WeaponData defaultWeapon;
+    [SerializeField] private AnimationCurve glitchCurve;
+    [SerializeField] private AudioGetter damageSfx;
 
-    private Camera cam; // Main Camera Ref
+    private Camera cam;
     private WeaponData currentWeapon;
     private Transform childFx;
-    private DigitalGlitch glitchFx; // Glitch effects
+    private DigitalGlitch glitchFx;
 
-    void Start()
+    private void Start()
     {
-        cam = GetComponent<Camera>(); // Get Camera Ref
-        glitchFx = GetComponent<DigitalGlitch>();
-        this.DelayedAction(delegate { SwitchWeapon(); }, 0.1f);
+        InitializeReferences();
+        this.DelayedAction(SwitchToDefaultWeapon, 0.1f);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if (currentWeapon != null && !GameManager.Instance.GamePaused && !GameManager.Instance.PlayerDead)
+        if (CanUpdateWeapon())
+        {
             currentWeapon.WeaponUpdate();
+        }
+    }
+
+    private void InitializeReferences()
+    {
+        cam = GetComponent<Camera>();
+        glitchFx = GetComponent<DigitalGlitch>();
+    }
+
+    private bool CanUpdateWeapon()
+    {
+        return currentWeapon != null && !GameManager.Instance.GamePaused && !GameManager.Instance.PlayerDead;
+    }
+
+    private void SwitchToDefaultWeapon()
+    {
+        SwitchWeapon(defaultWeapon);
     }
 
     public void SwitchWeapon(WeaponData weapon = null)
     {
-        currentWeapon = weapon != null ? weapon : defaultWeapon; // If no weapon, switch to default weapon
-        OnWeaponChanged(currentWeapon); // Broadcast event on weapon change
+        currentWeapon = weapon != null ? weapon : defaultWeapon;
+        OnWeaponChanged(currentWeapon);
         currentWeapon.SetupWeapon(cam, this);
     }
 
     public void SetMuzzleFx(Transform fx)
     {
         if (childFx != null)
+        {
             Destroy(childFx.gameObject);
+        }
 
         fx.SetParent(transform);
         childFx = fx;
     }
 
-    IEnumerator DoCameraShake(float timer, float amp, float freq)
+    private IEnumerator DoCameraShake(float timer, float amp, float freq)
     {
         AudioPlayer.Instance.PlaySFX(damageSfx, transform);
         Vector3 initPos = transform.position;
@@ -73,12 +89,22 @@ public class PlayerScript : MonoBehaviour
             yield return null;
         }
 
-        glitchFx.intensity = 0f; // Clear glitch effect
-        transform.position = initPos;
+        ClearGlitchEffect();
+        ResetTransformPosition(initPos);
     }
 
     public void ShakeCamera(float timer, float amp, float freq)
     {
         StartCoroutine(DoCameraShake(timer, amp, freq));
+    }
+
+    private void ClearGlitchEffect()
+    {
+        glitchFx.intensity = 0f;
+    }
+
+    private void ResetTransformPosition(Vector3 position)
+    {
+        transform.position = position;
     }
 }
